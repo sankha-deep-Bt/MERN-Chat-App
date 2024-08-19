@@ -6,7 +6,7 @@ import useSignup from "../../hooks/useSignup";
 const SignUp = () => {
   const [inputs, setInputs] = useState({
     fullName: "",
-    userName: "",
+    username: "",
     password: "",
     confirmPassword: "",
     gender: "",
@@ -55,9 +55,9 @@ const SignUp = () => {
               type="text"
               placeholder="Enter Username"
               className="w-full input input-bordered h-10"
-              value={inputs.userName}
+              value={inputs.username}
               onChange={(e) =>
-                setInputs({ ...inputs, userName: e.target.value })
+                setInputs({ ...inputs, username: e.target.value })
               }
             />
           </div>
@@ -103,8 +103,15 @@ const SignUp = () => {
             Already have an account?
           </Link>
 
-          <button className="btn btn-sm btn-block mt-2 bg-blue-700 hover:bg-blue-800 text-white border-none">
-            Signup
+          <button
+            className="btn btn-sm btn-block mt-2 bg-blue-700 hover:bg-blue-800 text-white border-none"
+            disabled={loading}
+          >
+            {loading ? (
+              <span className="loading loading-spinner"></span>
+            ) : (
+              "Sign up"
+            )}
           </button>
         </form>
       </div>

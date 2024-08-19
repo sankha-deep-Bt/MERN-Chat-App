@@ -4,11 +4,11 @@ import generateTokenAndSetCookie from "../utils/genToken.js";
 
 export const signup = async (req, res) => {
   try {
-    const { fullName, userName, password, confirmPassword, gender } = req.body; // taking user info
+    const { fullName, username, password, confirmPassword, gender } = req.body; // taking user info
     if (password !== confirmPassword) {
       return res.status(400).json({ error: "Password don't match!!" });
     }
-    const user = await User.findOne({ userName }); // check if user already exist in database
+    const user = await User.findOne({ username }); // check if user already exist in database
 
     if (user) {
       return res.status(400).json({ error: "User already exists..." });
@@ -19,13 +19,13 @@ export const signup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // profilePic api: https://avatar-placeholder.iran.liara.run/
-    const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${userName}`;
-    const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${userName}`;
+    const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
+    const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
     // Creating new User
     const newUser = new User({
       fullName,
-      userName,
+      username,
       password: hashedPassword,
       gender,
       profilePic: gender === "male" ? boyProfilePic : girlProfilePic,
@@ -40,7 +40,7 @@ export const signup = async (req, res) => {
         // successfully created & passing the user
         _id: newUser._id,
         fullName: newUser.fullName,
-        userName: newUser.userName,
+        username: newUser.username,
         profilePic: newUser.profilePic,
       });
     } else {
@@ -54,8 +54,8 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const { userName, password } = req.body;
-    const user = await User.findOne({ userName });
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
     const isPasswordCorrect = await bcrypt.compare(
       password,
       user?.password || ""
@@ -68,7 +68,7 @@ export const login = async (req, res) => {
     res.status(200).json({
       _id: user._id,
       fullName: user.fullName,
-      userName: user.userName,
+      username: user.username,
       profilePic: user.profilePic,
     });
   } catch {
