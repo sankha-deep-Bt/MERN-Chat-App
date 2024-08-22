@@ -6,7 +6,7 @@ export const getUsersForSidebar = async (req, res) => {
     //find all users in the database $ne(not equal): loggedInUser
     const filteredUsers = await User.find({
       _id: { $ne: loggedInUser },
-    }).select("-password"); // we don't return the password o every user
+    }).select("-password"); // we don't return the password
 
     res.status(200).json(filteredUsers);
   } catch (error) {
