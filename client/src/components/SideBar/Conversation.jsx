@@ -1,6 +1,6 @@
 import useConversation from "../../store/useConversation";
 
-const Conversation = ({ conversation, lastIndex }) => {
+const Conversation = ({ conversation, lastIdx }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
 
   const isSelected = selectedConversation?._id === conversation._id;
@@ -25,7 +25,7 @@ const Conversation = ({ conversation, lastIndex }) => {
           </div>
         </div>
       </div>
-      {!lastIndex && <div className="divider my-0 py-0 h-1" />}
+      {!lastIdx && <div className="divider my-0 py-0 h-1" />}
     </>
   );
 };
